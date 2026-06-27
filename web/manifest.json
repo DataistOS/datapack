@@ -1,6 +1,6 @@
 {
-    "name": "datapack_dataist_ir",
-    "short_name": "datapack_dataist_ir",
+    "name": "datapack",
+    "short_name": "datapack",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

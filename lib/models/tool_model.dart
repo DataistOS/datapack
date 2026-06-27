@@ -1,0 +1,62 @@
+class Tool {
+  final String id;
+  final String name;
+  final String version;
+  final String? description;
+  final String? changelog;
+  final String? icon;
+  final String debFile;
+  final List<String> tags;
+
+  final bool isInstalled;
+  final bool hasUpdate;
+
+  Tool({
+    required this.id,
+    required this.name,
+    required this.version,
+    this.description,
+    this.changelog,
+    this.icon,
+    required this.debFile,
+    required this.tags,
+    this.isInstalled = false,
+    this.hasUpdate = false,
+  });
+
+  factory Tool.fromJson(Map<String, dynamic> json) {
+    return Tool(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      version: json['version'] as String,
+      description: json['description'] as String?,
+      changelog: json['changelog'] as String?,
+      icon: json['icon'] as String?,
+      debFile: json['deb_file'] as String,
+      tags: json['tags'] is String
+          ? (json['tags'] as String).split(',').map((e) => e.trim()).toList()
+          : (json['tags'] as List<dynamic>?)
+                    ?.map((e) => e.toString())
+                    .toList() ??
+                [],
+    );
+  }
+
+  Tool copyWith({bool? isInstalled, bool? hasUpdate}) {
+    return Tool(
+      id: id,
+      name: name,
+      version: version,
+      description: description,
+      changelog: changelog,
+      icon: icon,
+      debFile: debFile,
+      tags: tags,
+      isInstalled: isInstalled ?? this.isInstalled,
+      hasUpdate: hasUpdate ?? this.hasUpdate,
+    );
+  }
+
+  @override
+  String toString() => 'Tool(name: $name, version: $version)';
+}

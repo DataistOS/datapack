@@ -1,16 +1,37 @@
-# datapack_dataist_ir
+# Datapack
 
-A new Flutter project.
+Datapack serves as the central data registry for the **Datapack** application. It hosts the `tools.json` file, which manages the list of available tools, their metadata, icons, and direct download links for Debian-based packages.
 
-## Getting Started
+## Structure
+The core of this repository is the `tools.json` file, which follows this schema:
 
-This project is a starting point for a Flutter application.
+```json
+[
+  {
+    "id": "string",
+    "name": "string",
+    "version": "string",
+    "description": "string",
+    "changelog": "string",
+    "icon": "url_string",
+    "deb_file": "url_string",
+    "tags": ["string"]
+  }
+]
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    Centralized Management: Updates to tool versions and descriptions are managed here.
+    Lightweight Deployment: Designed for fast fetching via raw GitHub URLs.
+    Cross-Compatible: Easily parsed by the Datapack Flutter client.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Usage
+
+The application consumes this data to dynamically update the UI and handle installation processes. To add or update a tool:
+
+    Edit the tools.json file.
+    Ensure the deb_file link points to a valid .deb package.
+    Commit and push the changes.
+
+Maintained by [DataistOS]

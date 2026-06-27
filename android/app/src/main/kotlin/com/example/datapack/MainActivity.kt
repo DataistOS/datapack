@@ -1,4 +1,4 @@
-package com.example.datapack_dataist_ir
+package com.example.datapack
 
 import io.flutter.embedding.android.FlutterActivity
 

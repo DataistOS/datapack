@@ -1,45 +1,60 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# Flutter/Dart
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
 /build/
+*.dart_tool
+*.flutter-plugins
+*.flutter-plugins-dependencies
 
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
+# Android
+.gradle/
+.idea/
+*.iml
+*.iws
+*.ipr
 /android/app/debug
 /android/app/profile
 /android/app/release
+local.properties
+
+# iOS / macOS
+Pods/
+*.generated.xcconfig
+*.xcworkspace
+!default.xcworkspace
+**/ios/Flutter/.last_build_id
+
+# Environment variables
+.env
+.env.example
+.tmp
+
+# Linux / Windows / Web
+.linux/
+.windows/
+.web/
+# مسیر دقیق پوشه‌ای که در لیست Untracked دیدیم
+linux/cpack_build/
+linux/CMakeFiles/
+linux/CMakeCache.txt
+linux/cmake_install.cmake
+
+# Miscellaneous
+.DS_Store
+.history/
+*.log
+*.swp
+*.class
+*.pyc
+.svn/
+.atom/
+.build/
+.buildlog/
+.swiftpm/
+migrate_working_dir/
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
