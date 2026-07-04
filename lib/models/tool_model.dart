@@ -26,19 +26,19 @@ class Tool {
 
   factory Tool.fromJson(Map<String, dynamic> json) {
     return Tool(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      version: json['version'] as String,
-      description: json['description'] as String?,
-      changelog: json['changelog'] as String?,
-      icon: json['icon'] as String?,
-      debFile: json['deb_file'] as String,
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? 'Unknown',
+      version: json['version']?.toString() ?? '0.0.0',
+      description: json['description']?.toString(),
+      changelog: json['changelog']?.toString(),
+      icon: json['icon']?.toString(),
+      debFile: json['deb_file']?.toString() ?? '',
       tags: json['tags'] is String
           ? (json['tags'] as String).split(',').map((e) => e.trim()).toList()
           : (json['tags'] as List<dynamic>?)
-                    ?.map((e) => e.toString())
-                    .toList() ??
-                [],
+          ?.map((e) => e.toString())
+          .toList() ??
+          [],
     );
   }
 

@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: BlocProvider(
-        create: (context) => ToolBloc()..add(FetchToolsEvent()),
+        create: (context) =>
+        ToolBloc()
+          ..add(FetchToolsEvent()),
         child: const ToolListPage(),
       ),
     );

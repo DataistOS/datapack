@@ -25,17 +25,17 @@ class ToolCard extends StatelessWidget {
       child: ListTile(
         leading: iconUrl != null && iconUrl.isNotEmpty
             ? CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(iconUrl),
-                onBackgroundImageError: (exception, stackTrace) =>
-                    debugPrint('Failed to load icon: $exception'),
-                radius: 24,
-              )
+          backgroundColor: Colors.transparent,
+          backgroundImage: NetworkImage(iconUrl),
+          onBackgroundImageError: (exception, stackTrace) =>
+              debugPrint('Failed to load icon: $exception'),
+          radius: 24,
+        )
             : const CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: 24,
-                child: Icon(Icons.build, color: Colors.white),
-              ),
+          backgroundColor: Colors.grey,
+          radius: 24,
+          child: Icon(Icons.build, color: Colors.white),
+        ),
         title: Text(
           tool.name,
           style: const TextStyle(fontWeight: FontWeight.bold),
