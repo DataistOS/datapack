@@ -1,58 +1,82 @@
-# Flutter/Dart
+# ==================================================
+# Custom .gitignore for Datapack (Flutter)
+# ==================================================
+
+# --- OS & IDEs ---
+.idea/
+.vscode/
+.DS_Store
+.history/
+*.log
+*.swp
+*.iml
+*.ipr
+*.iws
+
+# --- Flutter/Dart Specific ---
 .dart_tool/
-.packages
+.flutter-plugins
+.flutter-plugins-dependencies
 .pub-cache/
 .pub/
+.packages
 build/
-*.dart_tool
-*.flutter-plugins
-*.flutter-plugins-dependencies
 
-# Android
-.gradle/
-.idea/
-*.iml
-*.iws
-*.ipr
-local.properties
+# Ignore symbolication and obfuscation maps
+app.*.symbols
+app.*.map.json
+
+# --- Android Specific ---
+android/local.properties
+android/key.properties
 android/app/debug/
 android/app/profile/
 android/app/release/
+*.jks
+*.keystore
 
-# iOS / macOS
+# --- iOS/macOS Specific ---
+ios/Flutter/.last_build_id
+ios/Flutter/ephemeral/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/AppFrameworkInfo.plist
+macos/Flutter/ephemeral/
+*.moved-aside
 Pods/
 *.generated.xcconfig
 *.xcworkspace
 !default.xcworkspace
-**/ios/Flutter/.last_build_id
 .swiftpm/
 
-# Linux / Windows
+# --- Desktop & Web Ephemeral Files ---
 linux/cpack_build/
 linux/CMakeFiles/
 linux/CMakeCache.txt
 linux/cmake_install.cmake
 linux/flutter/ephemeral/
 windows/flutter/ephemeral/
+web/canvaskit/
+web/main.dart.js
+web/flutter_service_worker.js
 
-# Environment variables
+# --- Environment & Secret Files ---
 .env
 .env.example
 .tmp
+.env.*
 
-# Miscellaneous
-.DS_Store
-.history/
-*.log
-*.swp
-*.class
+# --- Generated Plugin Registrants ---
+**/GeneratedPluginRegistrant.java
+**/GeneratedPluginRegistrant.h
+**/GeneratedPluginRegistrant.m
+**/GeneratedPluginRegistrant.swift
+**/generated_plugin_registrant.*
+
+# --- Miscellaneous ---
+migrate_working_dir/
 *.pyc
+*.class
 .svn/
 .atom/
 .build/
 .buildlog/
-migrate_working_dir/
-
-# Symbolication & Obfuscation
-app.*.symbols
-app.*.map.json

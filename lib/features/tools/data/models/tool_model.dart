@@ -1,3 +1,5 @@
+// lib/features/tools/data/models/tool_model.dart
+
 class Tool {
   final String id;
   final String name;

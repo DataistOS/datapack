@@ -1,6 +1,9 @@
+// lib/features/tools/presentation/widgets/tool_card_widget.dart
+
 import 'package:flutter/material.dart';
-import 'package:datapack/models/tool_model.dart';
-import 'package:datapack/pages/tool_detail_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:datapack/features/tools/data/models/tool_model.dart';
+import 'package:datapack/features/tools/presentation/pages/tool_detail_page.dart';
 
 class ToolCard extends StatelessWidget {
   final Tool tool;
@@ -26,7 +29,7 @@ class ToolCard extends StatelessWidget {
         leading: iconUrl != null && iconUrl.isNotEmpty
             ? CircleAvatar(
           backgroundColor: Colors.transparent,
-          backgroundImage: NetworkImage(iconUrl),
+          backgroundImage: CachedNetworkImageProvider(iconUrl),
           onBackgroundImageError: (exception, stackTrace) =>
               debugPrint('Failed to load icon: $exception'),
           radius: 24,

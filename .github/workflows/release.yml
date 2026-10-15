@@ -1,0 +1,52 @@
+# ==============================================================================
+# Workflow Name: Create Release
+# Description: Automated workflow to build, package, and release Datapack
+#              artifacts when a new semantic version tag (v*) is pushed.
+# ==============================================================================
+
+name: Create Release
+
+# Trigger the workflow on pushes to tags matching v* (e.g., v1.0.0)
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build and Release Datapack
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository source code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Prepare environment and build package artifacts for distribution (Parch / Linux compatible)
+      - name: Create Distribution Archives
+        run: |
+          # Create standard source ZIP package for general distribution
+          zip -r DATAPACK-${{ github.ref_name }}.zip . \
+            -x "*.git*" "docs/_build/*" "tests/*" "node_modules/*" ".github/*"
+          
+          # Optional: Create specific tarball optimized for Linux / Parch distribution standards
+          tar -czf DATAPACK-${{ github.ref_name }}-linux-x86_64.tar.gz \
+            --exclude='.git' \
+            --exclude='docs/_build' \
+            --exclude='tests' \
+            --exclude='node_modules' \
+            --exclude='.github' \
+            .
+
+      # Step 3: Publish the release and upload the generated assets to GitHub Releases
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            DATAPACK-*.zip
+            DATAPACK-*.tar.gz
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
