@@ -96,7 +96,7 @@ class ToolDetailPage extends StatelessWidget {
 
             if (tool.description != null && tool.description!.isNotEmpty) ...[
               Text(
-                'توضیحات برنامه',
+                'Description',
                 style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold),
               ),
@@ -120,7 +120,7 @@ class ToolDetailPage extends StatelessWidget {
 
             if (tool.changelog != null && tool.changelog!.isNotEmpty) ...[
               Text(
-                'تاریخچه تغییرات (Changelog)',
+                'Changelog',
                 style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold),
               ),
@@ -142,10 +142,9 @@ class ToolDetailPage extends StatelessWidget {
               const SizedBox(height: 24),
             ],
 
-            // بخش تگ‌ها (Tags)
             if (tool.tags.isNotEmpty) ...[
               Text(
-                'دسته‌بندی‌ها و تگ‌ها',
+                'Tags',
                 style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold),
               ),

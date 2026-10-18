@@ -3,7 +3,7 @@ name: datapack
 description: "Datapack is an official tool for managing, installing, uninstalling, and updating DataistOS software packages."
 homepage: datapack
 documentation: https://dpic.dataist.ir/
-version: 0.2.0+1
+version: 0.2.1+1
 
 # Environment
 environment:

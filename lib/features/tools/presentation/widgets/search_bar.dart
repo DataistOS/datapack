@@ -14,6 +14,8 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: TextField(
@@ -21,13 +23,15 @@ class SearchBarWidget extends StatelessWidget {
         onChanged: (text) => onSearch(),
         decoration: InputDecoration(
           hintText: 'Search for tools...',
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search, size: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: Colors.grey[200],
+          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+          contentPadding: const EdgeInsets.symmetric(
+              vertical: 0, horizontal: 16),
         ),
       ),
     );

@@ -46,6 +46,7 @@ class _ToolListPageState extends State<ToolListPage> {
             success ? '${tool.name} installed successfully!' : (provider
                 .errorMessage ?? 'Install failed'),
           ),
+          behavior: SnackBarBehavior.floating,
         ),
       );
     }
@@ -58,9 +59,10 @@ class _ToolListPageState extends State<ToolListPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            success ? 'Uninstalled successfully!' : (provider.errorMessage ??
-                'Uninstall failed'),
+            success ? '${tool.name} uninstalled successfully!' : (provider
+                .errorMessage ?? 'Uninstall failed'),
           ),
+          behavior: SnackBarBehavior.floating,
         ),
       );
     }
@@ -68,31 +70,55 @@ class _ToolListPageState extends State<ToolListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: CustomAppBar(onRefresh: () => _onRefresh(context)),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SearchBar(
-              controller: _searchController,
-              padding: const WidgetStatePropertyAll<EdgeInsets>(
-                EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-              leading: const Icon(Icons.search),
-              hintText: 'Search for tools...',
+          Container(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            color: theme.colorScheme.surface,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search tools...',
+                    prefixIcon: const Icon(Icons.search, size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                      icon: const Icon(Icons.clear, size: 18),
+                      onPressed: () => _searchController.clear(),
+                    )
+                        : null,
+                    filled: true,
+                    fillColor: theme.colorScheme.surfaceContainerHighest
+                        .withOpacity(0.5),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 0, horizontal: 16),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SortFilterBar(
+                  selectedOption: _currentSortOption,
+                  onOptionChanged: (SortOption? newOption) {
+                    if (newOption != null) {
+                      setState(() {
+                        _currentSortOption = newOption;
+                      });
+                    }
+                  },
+                ),
+              ],
             ),
           ),
-          SortFilterBar(
-            selectedOption: _currentSortOption,
-            onOptionChanged: (SortOption? newOption) {
-              if (newOption != null) {
-                setState(() {
-                  _currentSortOption = newOption;
-                });
-              }
-            },
-          ),
+          const Divider(height: 1),
+
           Expanded(
             child: Consumer<ToolProvider>(
               builder: (context, provider, child) {
@@ -147,14 +173,24 @@ class _ToolListPageState extends State<ToolListPage> {
                 });
 
                 if (filteredTools.isEmpty) {
-                  return const Center(
-                    child: Text('No tools found for this search.'),
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.search_off, size: 48,
+                            color: theme.colorScheme.outline),
+                        const SizedBox(height: 12),
+                        Text('No tools found for this search.',
+                            style: theme.textTheme.bodyLarge),
+                      ],
+                    ),
                   );
                 }
 
                 return RefreshIndicator(
                   onRefresh: () => provider.fetchTools(),
                   child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: filteredTools.length,
                     itemBuilder: (context, index) {
                       final tool = filteredTools[index];
