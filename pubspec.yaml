@@ -3,7 +3,7 @@ name: datapack
 description: "Datapack is an official tool for managing, installing, uninstalling, and updating DataistOS software packages."
 homepage: datapack
 documentation: https://dpic.dataist.ir/
-version: 0.2.1+1
+version: 0.3.0+1
 
 # Environment
 environment:
@@ -14,6 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # State Management
+  provider: ^6.1.5+1
+
   # Environment & Config
   flutter_dotenv: ^5.2.1
 
@@ -21,11 +24,19 @@ dependencies:
   url_launcher: ^6.3.2
   http: ^1.6.0
 
-  # State Management
-  provider: ^6.1.5+1
+  # Storage & Caching
+  shared_preferences: ^2.5.3
 
-  # Cached Image Loading
+  # UI & Media
   cached_network_image: ^3.4.1
+
+  # Device & System Info
+  package_info_plus: ^9.0.1
+  path_provider: ^2.1.5
+
+  # Desktop Integration (System Tray & Window Management)
+  tray_manager: ^0.5.3
+  window_manager: ^0.5.2
 
 # Development Dependencies
 dev_dependencies:
@@ -56,6 +67,10 @@ flutter:
 # Flutter Launcher Icons Configuration
 flutter_launcher_icons:
   image_path: "assets/images/logo.png"
+  linux:
+    enable: true
+  windows:
+    enable: true
   android: true
   ios: true
   remove_alpha_ios: true

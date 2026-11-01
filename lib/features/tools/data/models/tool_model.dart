@@ -1,5 +1,4 @@
 // lib/features/tools/data/models/tool_model.dart
-
 class Tool {
   final String id;
   final String name;
@@ -12,6 +11,7 @@ class Tool {
 
   final bool isInstalled;
   final bool hasUpdate;
+  final bool isFavorite;
 
   Tool({
     required this.id,
@@ -24,6 +24,7 @@ class Tool {
     required this.tags,
     this.isInstalled = false,
     this.hasUpdate = false,
+    this.isFavorite = false,
   });
 
   factory Tool.fromJson(Map<String, dynamic> json) {
@@ -38,13 +39,14 @@ class Tool {
       tags: json['tags'] is String
           ? (json['tags'] as String).split(',').map((e) => e.trim()).toList()
           : (json['tags'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ??
-          [],
+                    ?.map((e) => e.toString())
+                    .toList() ??
+                [],
+      isFavorite: json['isFavorite'] ?? false,
     );
   }
 
-  Tool copyWith({bool? isInstalled, bool? hasUpdate}) {
+  Tool copyWith({bool? isInstalled, bool? hasUpdate, bool? isFavorite}) {
     return Tool(
       id: id,
       name: name,
@@ -56,9 +58,11 @@ class Tool {
       tags: tags,
       isInstalled: isInstalled ?? this.isInstalled,
       hasUpdate: hasUpdate ?? this.hasUpdate,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
   @override
-  String toString() => 'Tool(name: $name, version: $version)';
+  String toString() =>
+      'Tool(name: $name, version: $version, favorite: $isFavorite)';
 }

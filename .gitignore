@@ -80,3 +80,9 @@ migrate_working_dir/
 .atom/
 .build/
 .buildlog/
+
+# --- Linux Build Artifacts & Packaging Extras ---
+linux/build/
+linux/bundle/
+*.tar.gz
+*.zip

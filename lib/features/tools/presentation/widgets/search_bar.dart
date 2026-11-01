@@ -1,5 +1,4 @@
 // lib/features/tools/presentation/widgets/search_bar.dart
-
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -31,7 +30,9 @@ class SearchBarWidget extends StatelessWidget {
           filled: true,
           fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
           contentPadding: const EdgeInsets.symmetric(
-              vertical: 0, horizontal: 16),
+            vertical: 0,
+            horizontal: 16,
+          ),
         ),
       ),
     );

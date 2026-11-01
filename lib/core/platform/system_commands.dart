@@ -1,5 +1,4 @@
 // lib/core/platform/system_commands.dart
-
 import 'dart:io';
 import 'package:datapack/core/platform/platform_detector.dart';
 
@@ -45,11 +44,6 @@ class SystemCommands {
   }
 
   static Future<ProcessResult> removePackage(String packageName) async {
-    return await Process.run('sudo', [
-      'apt-get',
-      'remove',
-      '-y',
-      packageName,
-    ]);
+    return await Process.run('sudo', ['apt-get', 'remove', '-y', packageName]);
   }
 }

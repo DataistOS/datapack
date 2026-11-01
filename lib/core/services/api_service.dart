@@ -1,5 +1,4 @@
 // lib/core/services/api_service.dart
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +34,8 @@ class ApiService {
         return response.bodyBytes;
       } else {
         throw Exception(
-            'Failed to download file: Status code ${response.statusCode}');
+          'Failed to download file: Status code ${response.statusCode}',
+        );
       }
     } catch (e) {
       throw Exception('Download error: $e');
