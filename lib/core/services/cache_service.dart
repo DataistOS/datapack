@@ -11,7 +11,6 @@ class CacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      // استفاده از var برای جلوگیری کامل از خطاهای نوع و کاراکترهای جنریک
       final jsonList = tools
           .map(
             (tool) => {

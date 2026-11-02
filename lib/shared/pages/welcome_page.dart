@@ -160,7 +160,6 @@ class _WelcomePageState extends State<WelcomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Dot indicators
                   Row(
                     children: List.generate(
                       _steps.length,
@@ -179,7 +178,6 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
 
-                  // Action Buttons
                   Row(
                     children: [
                       if (_currentPage > 0)

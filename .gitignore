@@ -63,6 +63,7 @@ web/flutter_service_worker.js
 .env
 .env.example
 .tmp
+.TODO
 .env.*
 
 # --- Generated Plugin Registrants ---

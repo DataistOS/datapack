@@ -1,5 +1,4 @@
 // lib/features/tools/data/models/workspace_model.dart
-
 class WorkspaceCategory {
   final String id;
   final String name;
@@ -10,6 +9,18 @@ class WorkspaceCategory {
     required this.name,
     required this.subcategories,
   });
+
+  factory WorkspaceCategory.fromJson(
+    String id,
+    Map<String, dynamic> json,
+    List<WorkspaceSubcategory> subcategories,
+  ) {
+    return WorkspaceCategory(
+      id: id,
+      name: json['name'] ?? id,
+      subcategories: subcategories,
+    );
+  }
 }
 
 class WorkspaceSubcategory {

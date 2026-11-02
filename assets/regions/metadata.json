@@ -1,0 +1,11 @@
+{
+  "regions": [
+    {
+      "id": "estahban",
+      "folder": "and_estahban",
+      "name": "Estahban",
+      "fa_name": "استهبان",
+      "province": "Fars"
+    }
+  ]
+}

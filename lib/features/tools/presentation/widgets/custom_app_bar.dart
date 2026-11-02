@@ -18,26 +18,57 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
 
     return AppBar(
-      title: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primaryContainer.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(8),
+      title: Tooltip(
+        message: 'datapack.dataist.ir',
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                Icons.widgets_rounded,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
             ),
-            child: Icon(
-              Icons.widgets_rounded,
-              size: 20,
-              color: theme.colorScheme.primary,
+            const SizedBox(width: 10),
+            RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: theme.textTheme.bodyLarge?.fontFamily,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Data',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'pack',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'ist',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          const Text(
-            'Datapack',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: [
         IconButton(
