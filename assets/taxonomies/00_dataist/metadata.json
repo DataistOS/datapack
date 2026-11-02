@@ -1,0 +1,6 @@
+{
+  "id": "00_dataist",
+  "name": "Dataist Default Baseline",
+  "description": "Default core packages and tools for all Dataist distributions",
+  "version": "1.0.0"
+}

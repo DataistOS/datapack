@@ -8,6 +8,10 @@ class RefreshButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(icon: const Icon(Icons.refresh), onPressed: onRefresh);
+    return IconButton(
+      icon: const Icon(Icons.refresh_rounded),
+      onPressed: onRefresh,
+      tooltip: 'Refresh tools',
+    );
   }
 }

@@ -1,9 +1,16 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [v0.4.0] - 2026-06-06
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Major Features & Additions
+- **Industry Workspaces Integration:** Added comprehensive industry-specific taxonomies and base packages ranging from Dataist core and AgriTech to Retail Services (`assets/taxonomies/`).
+- **Dynamic System Storage Monitoring:** Integrated real-time partition metrics tracking via system `df` commands, rendered dynamically inside the `SystemStorageCard` component.
+- **Enhanced UI & Workflows:** Introduced dedicated workspace management pages, interactive tool stacks installation dialogs via terminal integration, and smooth shimmer loading placeholders.
+
+### Improvements & Refactoring
+- **Core Services Overhaul:** Upgraded platform commands, caching mechanisms, settings, tray services, and API handlers for robust Linux desktop execution.
+- **Model & State Updates:** Refined `Tool` and `Workspace` models with enhanced null-safety and structured resource links (GitHub, Telegram, Docs, etc.).
+- **Codebase Cleanliness:** Addressed syntax compilation and formatting across core features and presentation layers.
 
 ## [0.3.0] - 2026-11-01
 

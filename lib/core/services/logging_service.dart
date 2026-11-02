@@ -1,5 +1,6 @@
 // lib/core/services/logging_service.dart
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LoggingService {
@@ -24,7 +25,7 @@ class LoggingService {
         );
       }
     } catch (e) {
-      print('Failed to initialize logging service: $e');
+      debugPrint('Failed to initialize logging service: $e');
     }
   }
 
@@ -39,7 +40,7 @@ class LoggingService {
 
       await _logFile?.writeAsString(logEntry, mode: FileMode.append);
     } catch (e) {
-      print('Failed to write log: $e');
+      debugPrint('Failed to write log: $e');
     }
   }
 
@@ -49,7 +50,7 @@ class LoggingService {
         return await _logFile!.readAsString();
       }
     } catch (e) {
-      print('Failed to read logs: $e');
+      debugPrint('Failed to read logs: $e');
     }
     return 'No logs available.';
   }

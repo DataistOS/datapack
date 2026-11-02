@@ -8,12 +8,13 @@ class Tool {
   final String? icon;
   final String debFile;
   final List<String> tags;
+  final Map<String, String> links;
 
   final bool isInstalled;
   final bool hasUpdate;
   final bool isFavorite;
 
-  Tool({
+  const Tool({
     required this.id,
     required this.name,
     required this.version,
@@ -22,12 +23,22 @@ class Tool {
     this.icon,
     required this.debFile,
     required this.tags,
+    this.links = const {},
     this.isInstalled = false,
     this.hasUpdate = false,
     this.isFavorite = false,
   });
 
   factory Tool.fromJson(Map<String, dynamic> json) {
+    Map<String, String> parsedLinks = {};
+    if (json['links'] is Map) {
+      (json['links'] as Map<String, dynamic>).forEach((key, value) {
+        if (value != null) {
+          parsedLinks[key] = value.toString();
+        }
+      });
+    }
+
     return Tool(
       id: json['id']?.toString() ?? '',
       name: json['name']?.toString() ?? 'Unknown',
@@ -42,6 +53,7 @@ class Tool {
                     ?.map((e) => e.toString())
                     .toList() ??
                 [],
+      links: parsedLinks,
       isFavorite: json['isFavorite'] ?? false,
     );
   }
@@ -56,6 +68,7 @@ class Tool {
       icon: icon,
       debFile: debFile,
       tags: tags,
+      links: links,
       isInstalled: isInstalled ?? this.isInstalled,
       hasUpdate: hasUpdate ?? this.hasUpdate,
       isFavorite: isFavorite ?? this.isFavorite,

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # ابزار مدیریت پروژه و تسک‌ها برای تیم‌های نرم‌افزاری
+  project_management:
+    image: kanboard/kanboard:latest
+    container_name: karan_project_mgmt
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # پلتفرم ذخیره و اشتراک‌گذاری اسناد فنی
+  wiki_docs:
+    image: wikijs/wiki:latest
+    container_name: karan_docs
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

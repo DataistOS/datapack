@@ -1,9 +1,10 @@
 # General Section (Metadata)
 name: datapack
-description: "Datapack is an official tool for managing, installing, uninstalling, and updating DataistOS software packages."
 homepage: datapack
-documentation: https://dpic.dataist.ir/
-version: 0.3.0+1
+description: "Datapack is an official tool for managing, installing, uninstalling, and updating DataistOS software packages."
+issue_tracker: https://github.com/DataistOS/datapack/issues
+documentation: https://dpic.dataist.ir/heuristic/_source/category/tools/datapack.html
+version: 0.4.0+1
 
 # Environment
 environment:
@@ -36,9 +37,9 @@ dependencies:
 
   # Desktop Integration (System Tray & Window Management)
   tray_manager: ^0.5.3
-  window_manager: ^0.5.2
 
 # Development Dependencies
+  datapkg: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -57,6 +58,7 @@ flutter:
   assets:
     - .env
     - assets/images/
+    - assets/taxonomies/
 
   # Custom Fonts
   fonts:

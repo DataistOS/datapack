@@ -23,6 +23,12 @@ class _TerminalDialogState extends State<TerminalDialog> {
     _runAction();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _runAction() async {
     _appendLog('Initializing process for ${widget.title}...');
     try {

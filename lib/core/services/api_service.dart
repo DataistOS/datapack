@@ -9,7 +9,13 @@ class ApiService {
 
   Future<List<dynamic>> fetchJsonList(String url) async {
     try {
-      final response = await client.get(Uri.parse(url));
+      final response = await client.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'Datapack-Linux-App',
+        },
+      );
 
       if (response.statusCode == 200) {
         final decodedData = json.decode(response.body);
@@ -28,7 +34,10 @@ class ApiService {
 
   Future<List<int>> downloadFile(String url) async {
     try {
-      final response = await client.get(Uri.parse(url));
+      final response = await client.get(
+        Uri.parse(url),
+        headers: {'User-Agent': 'Datapack-Linux-App'},
+      );
 
       if (response.statusCode == 200) {
         return response.bodyBytes;

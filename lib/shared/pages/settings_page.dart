@@ -25,11 +25,13 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _loadSettings() async {
     final isDark = await SettingsService.getDarkMode();
     final autoCheck = await SettingsService.getAutoCheckUpdate();
-    setState(() {
-      _isDarkMode = isDark;
-      _autoCheckUpdate = autoCheck;
-      _isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isDarkMode = isDark;
+        _autoCheckUpdate = autoCheck;
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -38,6 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (_isLoading) {
       return Scaffold(
+        backgroundColor: theme.colorScheme.surface,
         appBar: AppBar(title: const Text('Settings')),
         body: const Center(child: CircularProgressIndicator()),
       );
@@ -155,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   subtitle: const Text(
-                    'Version 0.2.1 • Built with Flutter for Linux',
+                    'Version 0.3.0 • Built with Flutter for Linux',
                   ),
                 ),
               ),

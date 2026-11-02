@@ -1,0 +1,13 @@
+{
+  "id": "09_IT_Software_Telecom",
+  "name": {
+    "en": "IT, Software & Telecom",
+    "fa": "فناوری اطلاعات، نرم‌افزار و مخابرات"
+  },
+  "description": {
+    "en": "Core infrastructure, software development, AI, cloud services, and telecommunication tools.",
+    "fa": "زیرساخت‌های اصلی، توسعه نرم‌افزار، هوش مصنوعی، سرویس‌های ابری و ابزارهای مخابراتی."
+  },
+  "version": "1.0.0",
+  "maintainer": "Dataist Core Team"
+}

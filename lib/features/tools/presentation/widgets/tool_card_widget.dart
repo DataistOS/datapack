@@ -25,16 +25,23 @@ class ToolCard extends StatelessWidget {
     final isInstalled = tool.isInstalled;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.15),
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
           color: tool.isFavorite
               ? Colors.amber.withOpacity(0.6)
-              : theme.colorScheme.outlineVariant.withOpacity(0.4),
+              : theme.colorScheme.outlineVariant.withOpacity(0.25),
           width: tool.isFavorite ? 1.5 : 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Material(
         color: Colors.transparent,
@@ -45,7 +52,11 @@ class ToolCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ToolDetailPage(tool: tool),
+                builder: (context) => ToolDetailPage(
+                  tool: tool,
+                  onInstall: onInstall,
+                  onUninstall: onUninstall,
+                ),
               ),
             );
           },
@@ -55,26 +66,26 @@ class ToolCard extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(14.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 6,
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(14.0),
                     child: iconUrl != null && iconUrl.isNotEmpty
                         ? CachedNetworkImage(
                             imageUrl: iconUrl,
-                            width: 52,
-                            height: 52,
+                            width: 56,
+                            height: 56,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Container(
-                              width: 52,
-                              height: 52,
+                              width: 56,
+                              height: 56,
                               color: theme.colorScheme.surfaceContainerHighest,
                               child: const Center(
                                 child: SizedBox(
@@ -87,25 +98,25 @@ class ToolCard extends StatelessWidget {
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(
-                              width: 52,
-                              height: 52,
+                              width: 56,
+                              height: 56,
                               color: theme.colorScheme.surfaceContainerHighest,
                               child: Icon(
                                 Icons.extension_rounded,
-                                size: 26,
+                                size: 28,
                                 color: theme.colorScheme.primary,
                               ),
                             ),
                           )
                         : Container(
-                            width: 52,
-                            height: 52,
+                            width: 56,
+                            height: 56,
                             color: theme.colorScheme.primaryContainer
-                                .withOpacity(0.7),
+                                .withOpacity(0.8),
                             child: Icon(
                               Icons.terminal_rounded,
                               color: theme.colorScheme.primary,
-                              size: 26,
+                              size: 28,
                             ),
                           ),
                   ),
@@ -132,11 +143,11 @@ class ToolCard extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
-                              vertical: 3,
+                              vertical: 2.5,
                             ),
                             decoration: BoxDecoration(
                               color: theme.colorScheme.secondaryContainer
-                                  .withOpacity(0.6),
+                                  .withOpacity(0.5),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -144,13 +155,13 @@ class ToolCard extends StatelessWidget {
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSecondaryContainer,
                                 fontSize: 11,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 4),
                       if (tool.description != null &&
                           tool.description!.isNotEmpty)
                         Text(
@@ -175,17 +186,13 @@ class ToolCard extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: theme.colorScheme.surfaceContainerHighest
-                                    .withOpacity(0.5),
+                                    .withOpacity(0.35),
                                 borderRadius: BorderRadius.circular(6),
-                                border: Border.all(
-                                  color: theme.colorScheme.outlineVariant
-                                      .withOpacity(0.2),
-                                ),
                               ),
                               child: Text(
                                 tag.trim(),
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 10.5,
                                   color: theme.colorScheme.onSurfaceVariant,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -205,7 +212,7 @@ class ToolCard extends StatelessWidget {
                         : Icons.star_border_rounded,
                     color: tool.isFavorite
                         ? Colors.amber
-                        : theme.colorScheme.outline,
+                        : theme.colorScheme.outline.withOpacity(0.7),
                   ),
                   onPressed: () {
                     context.read<ToolProvider>().toggleFavorite(
@@ -221,23 +228,19 @@ class ToolCard extends StatelessWidget {
                 SizedBox(
                   height: 38,
                   child: isInstalled
-                      ? OutlinedButton.icon(
+                      ? OutlinedButton(
                           onPressed: () => onUninstall(context, tool),
-                          icon: const Icon(
-                            Icons.remove_circle_outline,
-                            size: 16,
-                          ),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: theme.colorScheme.error,
                             side: BorderSide(
-                              color: theme.colorScheme.error.withOpacity(0.6),
+                              color: theme.colorScheme.error.withOpacity(0.5),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
                           ),
-                          label: const Text(
+                          child: const Text(
                             'Uninstall',
                             style: TextStyle(
                               fontSize: 12,
@@ -245,16 +248,15 @@ class ToolCard extends StatelessWidget {
                             ),
                           ),
                         )
-                      : FilledButton.icon(
+                      : FilledButton(
                           onPressed: () => onInstall(context, tool),
-                          icon: const Icon(Icons.download_rounded, size: 16),
                           style: FilledButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
                           ),
-                          label: const Text(
+                          child: const Text(
                             'Install',
                             style: TextStyle(
                               fontSize: 12,

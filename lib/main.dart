@@ -1,60 +1,72 @@
 // lib/main.dart
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:window_manager/window_manager.dart';
 import 'package:datapack/core/services/logging_service.dart';
+import 'package:datapack/core/services/settings_service.dart';
 import 'package:datapack/features/tools/presentation/providers/tool_provider.dart';
+import 'package:datapack/features/tools/presentation/providers/workspace_provider.dart'; // حتماً ایمپورت شود
 import 'package:datapack/features/tools/presentation/pages/tool_list_page.dart';
+import 'package:datapack/shared/pages/welcome_page.dart';
+
+final ValueNotifier<bool> themeNotifier = ValueNotifier<bool>(true);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await windowManager.ensureInitialized();
-
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(950, 700),
-    minimumSize: Size(700, 500),
-    center: true,
-    title: 'Datapack Toolbox',
-  );
-
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-
-    try {
-      if (Platform.isLinux || Platform.isWindows) {}
-    } catch (_) {}
-  });
 
   try {
     await dotenv.load(fileName: ".env");
   } catch (_) {}
 
-  await LoggingService.init();
-  await LoggingService.log('Datapack application started successfully.');
+  try {
+    await LoggingService.init();
+    await LoggingService.log('Datapack application started successfully.');
+  } catch (_) {}
 
-  runApp(const MyApp());
+  final savedDarkMode = await SettingsService.getDarkMode();
+  themeNotifier.value = savedDarkMode;
+
+  final isFirstRun = await SettingsService.isFirstRun();
+
+  runApp(MyApp(isFirstRun: isFirstRun));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFirstRun;
+
+  const MyApp({super.key, required this.isFirstRun});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ToolProvider()..fetchTools(),
-      child: MaterialApp(
-        title: 'Datapack',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: 'Vazir',
-        ),
-        home: const ToolListPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ToolProvider()..fetchTools()),
+        ChangeNotifierProvider(create: (_) => WorkspaceProvider()),
+      ],
+      child: ValueListenableBuilder<bool>(
+        valueListenable: themeNotifier,
+        builder: (context, isDark, child) {
+          return MaterialApp(
+            title: 'Datapack',
+            debugShowCheckedModeBanner: false,
+            themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+                brightness: Brightness.light,
+              ),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+            ),
+            home: isFirstRun ? const WelcomePage() : const ToolListPage(),
+          );
+        },
       ),
     );
   }

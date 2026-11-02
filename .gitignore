@@ -86,3 +86,8 @@ linux/build/
 linux/bundle/
 *.tar.gz
 *.zip
+
+# --- Debian Packaging Extras ---
+*.deb
+*.changes
+*.buildinfo

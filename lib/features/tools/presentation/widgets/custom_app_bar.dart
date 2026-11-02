@@ -15,24 +15,47 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AppBar(
-      title: const Text('Datapack Manager'),
+      title: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primaryContainer.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              Icons.widgets_rounded,
+              size: 20,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+          const SizedBox(width: 10),
+          const Text(
+            'Datapack',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ],
+      ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          tooltip: 'Settings',
-          onPressed: onOpenSettings,
+          icon: const Icon(Icons.refresh_rounded, size: 20),
+          tooltip: 'Refresh',
+          onPressed: onRefresh,
         ),
         IconButton(
-          icon: const Icon(Icons.system_update),
+          icon: const Icon(Icons.system_update_rounded, size: 20),
           tooltip: 'Check for Updates',
           onPressed: () => showUpdateDialog(context),
         ),
         IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: 'Refresh',
-          onPressed: onRefresh,
+          icon: const Icon(Icons.settings_outlined, size: 20),
+          tooltip: 'Settings',
+          onPressed: onOpenSettings,
         ),
+        const SizedBox(width: 8),
       ],
     );
   }
@@ -65,9 +88,9 @@ void showUpdateDialog(BuildContext context) async {
     return;
   }
 
-  final bool hasUpdate = updateResult['hasUpdate'];
-  final String currentVersion = updateResult['currentVersion'];
-  final ReleaseInfo release = updateResult['release'];
+  final bool hasUpdate = updateResult.hasUpdate;
+  final String currentVersion = updateResult.currentVersion;
+  final ReleaseInfo release = updateResult.release;
 
   if (!hasUpdate) {
     if (context.mounted) {

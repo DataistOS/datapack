@@ -108,7 +108,12 @@ class ToolProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final tool = _tools.firstWhere((t) => t.name == packageName);
+      final tool = _tools.firstWhere(
+        (t) => t.name == packageName,
+        orElse: () =>
+            throw Exception('Package $packageName not found in registry.'),
+      );
+
       final response = await http.get(Uri.parse(tool.debFile));
 
       if (response.statusCode == 200) {
