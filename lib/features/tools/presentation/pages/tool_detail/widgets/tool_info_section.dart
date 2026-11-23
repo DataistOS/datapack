@@ -284,7 +284,6 @@ class _ToolInfoSectionState extends State<ToolInfoSection> {
   }
 
   Future<String?> _fetchRemoteChangelog() async {
-    // آدرس فایل خام چنج‌لاگ در مخزن گیت‌هاب پروژه
     const rawChangelogUrl =
         'https://raw.githubusercontent.com/DataistOS/datapack/heuristic/CHANGELOG.md';
     return await GithubDocService.fetchRemoteContent(rawChangelogUrl);

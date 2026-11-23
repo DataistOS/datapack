@@ -1,4 +1,6 @@
 // lib/features/tools/data/models/tool_model.dart
+import 'package:datapack/features/tools/data/models/tool_source_model.dart';
+
 class Tool {
   final String id;
   final String name;
@@ -9,6 +11,8 @@ class Tool {
   final String debFile;
   final List<String> tags;
   final Map<String, String> links;
+  final List<ToolSource> sources;
+  final String? selectedSourceId;
 
   final bool isInstalled;
   final bool hasUpdate;
@@ -24,13 +28,51 @@ class Tool {
     required this.debFile,
     required this.tags,
     this.links = const {},
+    this.sources = const [],
+    this.selectedSourceId,
     this.isInstalled = false,
     this.hasUpdate = false,
     this.isFavorite = false,
   });
 
+  List<ToolSource> get effectiveSources {
+    if (sources.isNotEmpty) return sources;
+
+    final String repoUrl =
+        links['github'] ??
+        links['repository'] ??
+        links['source'] ??
+        'https://github.com/DataistOS';
+
+    return [
+      ToolSource(
+        id: 'default_${id}_$version',
+        label: 'GitHub Releases',
+        type: ToolSourceType.github,
+        url: repoUrl,
+        format: debFile.endsWith('.AppImage') ? 'AppImage' : 'DEB',
+        channel: 'stable',
+        version: version,
+        packageFile: debFile,
+        isAvailable: true,
+      ),
+    ];
+  }
+
+  ToolSource get activeSource {
+    final availableSources = effectiveSources;
+    if (selectedSourceId != null) {
+      for (final source in availableSources) {
+        if (source.id == selectedSourceId) {
+          return source;
+        }
+      }
+    }
+    return availableSources.first;
+  }
+
   factory Tool.fromJson(Map<String, dynamic> json) {
-    Map<String, String> parsedLinks = {};
+    final Map<String, String> parsedLinks = {};
     if (json['links'] is Map) {
       (json['links'] as Map<String, dynamic>).forEach((key, value) {
         if (value != null) {
@@ -38,6 +80,15 @@ class Tool {
         }
       });
     }
+
+    final List<String> parsedTags = json['tags'] is String
+        ? (json['tags'] as String)
+              .split(',')
+              .map((e) => e.trim())
+              .where((e) => e.isNotEmpty)
+              .toList()
+        : (json['tags'] as List<dynamic>?)?.map((e) => e.toString()).toList() ??
+              [];
 
     return Tool(
       id: json['id']?.toString() ?? '',
@@ -47,18 +98,20 @@ class Tool {
       changelog: json['changelog']?.toString(),
       icon: json['icon']?.toString(),
       debFile: json['deb_file']?.toString() ?? '',
-      tags: json['tags'] is String
-          ? (json['tags'] as String).split(',').map((e) => e.trim()).toList()
-          : (json['tags'] as List<dynamic>?)
-                    ?.map((e) => e.toString())
-                    .toList() ??
-                [],
+      tags: parsedTags,
       links: parsedLinks,
       isFavorite: json['isFavorite'] ?? false,
     );
   }
 
-  Tool copyWith({bool? isInstalled, bool? hasUpdate, bool? isFavorite}) {
+  Tool copyWith({
+    List<ToolSource>? sources,
+    String? selectedSourceId,
+    bool clearSelectedSource = false,
+    bool? isInstalled,
+    bool? hasUpdate,
+    bool? isFavorite,
+  }) {
     return Tool(
       id: id,
       name: name,
@@ -69,6 +122,10 @@ class Tool {
       debFile: debFile,
       tags: tags,
       links: links,
+      sources: sources ?? this.sources,
+      selectedSourceId: clearSelectedSource
+          ? null
+          : (selectedSourceId ?? this.selectedSourceId),
       isInstalled: isInstalled ?? this.isInstalled,
       hasUpdate: hasUpdate ?? this.hasUpdate,
       isFavorite: isFavorite ?? this.isFavorite,

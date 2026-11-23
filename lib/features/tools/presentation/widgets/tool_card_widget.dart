@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datapack/features/tools/data/models/tool_model.dart';
+import 'package:datapack/features/tools/data/models/tool_source_model.dart';
+import 'package:datapack/features/tools/data/sources/tool_source_resolver.dart';
 import 'package:datapack/features/tools/presentation/pages/tool_detail/tool_detail_page.dart';
 import 'package:datapack/features/tools/presentation/providers/tool_provider.dart';
 
@@ -10,12 +12,14 @@ class ToolCard extends StatelessWidget {
   final Tool tool;
   final Function(BuildContext, Tool) onInstall;
   final Function(BuildContext, Tool) onUninstall;
+  final Function(BuildContext, Tool, ToolSource)? onInstallWithSource;
 
   const ToolCard({
     super.key,
     required this.tool,
     required this.onInstall,
     required this.onUninstall,
+    this.onInstallWithSource,
   });
 
   @override
@@ -23,6 +27,13 @@ class ToolCard extends StatelessWidget {
     final String? iconUrl = tool.icon;
     final theme = Theme.of(context);
     final isInstalled = tool.isInstalled;
+
+    ToolSourceResolver? resolver;
+    try {
+      resolver = Provider.of<ToolSourceResolver>(context, listen: false);
+    } catch (_) {
+      resolver = null;
+    }
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
@@ -54,8 +65,10 @@ class ToolCard extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => ToolDetailPage(
                   tool: tool,
+                  sourceResolver: resolver,
                   onInstall: onInstall,
                   onUninstall: onUninstall,
+                  onInstallWithSource: onInstallWithSource,
                 ),
               ),
             );

@@ -5,7 +5,7 @@ import 'package:datapack/features/tools/presentation/providers/workspace_provide
 import 'package:datapack/features/tools/presentation/providers/tool_provider.dart';
 import 'package:datapack/features/tools/data/services/region_service.dart';
 import 'package:datapack/features/tools/data/models/region_model.dart';
-import 'package:datapack/features/tools/data/models/workspace_model.dart'; // مسیر صحیح و یکتا با Provider
+import 'package:datapack/features/tools/data/models/workspace_model.dart';
 import 'package:datapack/features/tools/presentation/widgets/terminal_dialog.dart';
 import 'package:datapack/features/tools/presentation/widgets/workspace_banner.dart';
 

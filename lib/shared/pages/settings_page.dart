@@ -1,6 +1,7 @@
 // shared/pages/settings_page.dart
 import 'package:flutter/material.dart';
 import 'package:datapack/core/services/settings_service.dart';
+import 'package:datapack/shared/widgets/upupa_source_settings_card.dart';
 
 class SettingsPage extends StatefulWidget {
   final Function(bool isDark) onThemeChanged;
@@ -14,6 +15,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool _isDarkMode = true;
   bool _autoCheckUpdate = true;
+  bool _upupaEnabled = true;
+  String? _upupaServerUrl;
+  String _upupaCollectionName = SettingsService.defaultUpupaCollection;
   bool _isLoading = true;
 
   @override
@@ -25,10 +29,17 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _loadSettings() async {
     final isDark = await SettingsService.getDarkMode();
     final autoCheck = await SettingsService.getAutoCheckUpdate();
+    final upupaEnabled = await SettingsService.isUpupaSourceEnabled();
+    final upupaUrl = await SettingsService.getUpupaServerUrl();
+    final upupaCollection = await SettingsService.getUpupaCollectionName();
+
     if (mounted) {
       setState(() {
         _isDarkMode = isDark;
         _autoCheckUpdate = autoCheck;
+        _upupaEnabled = upupaEnabled;
+        _upupaServerUrl = upupaUrl;
+        _upupaCollectionName = upupaCollection;
         _isLoading = false;
       });
     }
@@ -135,6 +146,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               const SizedBox(height: 32),
+              _buildSectionHeader(
+                theme,
+                'Package Sources (UpUpa)',
+                Icons.hub_outlined,
+              ),
+              const SizedBox(height: 12),
+              _buildSettingsCard(
+                theme,
+                child: UpupaSourceSettingsCard(
+                  initialEnabled: _upupaEnabled,
+                  initialServerUrl: _upupaServerUrl,
+                  initialCollectionName: _upupaCollectionName,
+                  onEnabledChanged: (value) {
+                    setState(() {
+                      _upupaEnabled = value;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
               _buildSectionHeader(theme, 'About', Icons.info_outline_rounded),
               const SizedBox(height: 12),
               _buildSettingsCard(
@@ -158,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   subtitle: const Text(
-                    'Version 0.3.0 • Built with Flutter for Linux',
+                    'Version 0.5.0 • Built with Flutter for Linux',
                   ),
                 ),
               ),

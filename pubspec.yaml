@@ -1,10 +1,11 @@
 # General Section (Metadata)
 name: datapack
+publish_to: none
 homepage: datapack
 description: "Datapack is an official tool for managing, installing, uninstalling, and updating DataistOS software packages."
 issue_tracker: https://github.com/DataistOS/datapack/issues
 documentation: https://dpic.dataist.ir/heuristic/_source/category/tools/datapack.html
-version: 0.5.0+1
+version: 0.6.0+1
 
 # Environment
 environment:
@@ -14,6 +15,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Backend Client (UpUpa API & Direct HTTP Requests)
+  upupa_dart:
+    path: ../upupa/upupa_dart
 
   # State Management
   provider: ^6.1.5+1

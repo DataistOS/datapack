@@ -2,17 +2,25 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datapack/features/tools/data/models/tool_model.dart';
+import 'package:datapack/features/tools/data/models/tool_source_model.dart';
+import 'package:datapack/features/tools/presentation/pages/tool_detail/widgets/source_selector_dropdown.dart';
 
 class ToolHeaderCard extends StatelessWidget {
   final Tool tool;
+  final ToolSource? selectedSource;
+  final ValueChanged<ToolSource>? onSourceChanged;
   final Function(BuildContext, Tool) onInstall;
   final Function(BuildContext, Tool) onUninstall;
+  final Function(BuildContext, Tool, ToolSource)? onInstallWithSource;
 
   const ToolHeaderCard({
     super.key,
     required this.tool,
+    this.selectedSource,
+    this.onSourceChanged,
     required this.onInstall,
     required this.onUninstall,
+    this.onInstallWithSource,
   });
 
   @override
@@ -20,6 +28,8 @@ class ToolHeaderCard extends StatelessWidget {
     final theme = Theme.of(context);
     final String? iconUrl = tool.icon;
     final isInstalled = tool.isInstalled;
+    final sources = tool.effectiveSources;
+    final activeSource = selectedSource ?? tool.activeSource;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -102,7 +112,9 @@ class ToolHeaderCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -116,7 +128,7 @@ class ToolHeaderCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        'v${tool.version}',
+                        'v${activeSource.version.isNotEmpty ? activeSource.version : tool.version}',
                         style: TextStyle(
                           color: theme.colorScheme.onSecondaryContainer,
                           fontWeight: FontWeight.w600,
@@ -124,8 +136,27 @@ class ToolHeaderCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (tool.hasUpdate) ...[
-                      const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer.withOpacity(
+                          0.45,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        activeSource.channel,
+                        style: TextStyle(
+                          color: theme.colorScheme.onPrimaryContainer,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    if (tool.hasUpdate)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -144,13 +175,20 @@ class ToolHeaderCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ],
                   ],
                 ),
               ],
             ),
           ),
           const SizedBox(width: 12),
+          if (onSourceChanged != null) ...[
+            SourceSelectorDropdown(
+              sources: sources,
+              selectedSource: activeSource,
+              onChanged: onSourceChanged!,
+            ),
+            const SizedBox(width: 10),
+          ],
           SizedBox(
             height: 40,
             child: isInstalled
@@ -175,7 +213,13 @@ class ToolHeaderCard extends StatelessWidget {
                     ),
                   )
                 : FilledButton(
-                    onPressed: () => onInstall(context, tool),
+                    onPressed: () {
+                      if (onInstallWithSource != null) {
+                        onInstallWithSource!(context, tool, activeSource);
+                      } else {
+                        onInstall(context, tool);
+                      }
+                    },
                     style: FilledButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

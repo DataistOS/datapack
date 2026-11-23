@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:datapack/core/services/logging_service.dart';
 import 'package:datapack/core/services/settings_service.dart';
+import 'package:datapack/features/tools/data/sources/github_source_provider.dart';
+import 'package:datapack/features/tools/data/sources/upupa_source_provider.dart';
+import 'package:datapack/features/tools/data/sources/tool_source_resolver.dart';
 import 'package:datapack/features/tools/presentation/providers/tool_provider.dart';
-import 'package:datapack/features/tools/presentation/providers/workspace_provider.dart'; // حتماً ایمپورت شود
+import 'package:datapack/features/tools/presentation/providers/workspace_provider.dart';
 import 'package:datapack/features/tools/presentation/pages/tool_list_page.dart';
 import 'package:datapack/shared/pages/welcome_page.dart';
 
@@ -36,11 +39,22 @@ class MyApp extends StatelessWidget {
 
   const MyApp({super.key, required this.isFirstRun});
 
+  ToolSourceResolver _buildSourceResolver() {
+    return ToolSourceResolver(
+      providers: [GitHubSourceProvider(), UpUpaSourceProvider()],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final sourceResolver = _buildSourceResolver();
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ToolProvider()..fetchTools()),
+        Provider<ToolSourceResolver>.value(value: sourceResolver),
+        ChangeNotifierProvider(
+          create: (_) => ToolProvider(sourceResolver: sourceResolver),
+        ),
         ChangeNotifierProvider(create: (_) => WorkspaceProvider()),
       ],
       child: ValueListenableBuilder<bool>(

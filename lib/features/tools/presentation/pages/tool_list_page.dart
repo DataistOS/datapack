@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:datapack/core/services/tray_service.dart';
+import 'package:datapack/features/tools/data/models/tool_source_model.dart';
 import 'package:datapack/features/tools/presentation/widgets/custom_app_bar.dart';
 import 'package:datapack/features/tools/presentation/widgets/tool_card_widget.dart';
 import 'package:datapack/features/tools/presentation/widgets/sort_filter_bar.dart';
@@ -81,6 +82,37 @@ class _ToolListPageState extends State<ToolListPage> {
           final provider = context.read<ToolProvider>();
           onLog('Executing system installation command...');
           final success = await provider.installTool(tool.name);
+          onLog(
+            success
+                ? 'Package successfully installed!'
+                : (provider.errorMessage ?? 'Installation failed.'),
+          );
+          return success;
+        },
+      ),
+    );
+    if (context.mounted) context.read<ToolProvider>().fetchTools();
+  }
+
+  Future<void> _onInstallToolWithSource(
+    BuildContext context,
+    tool,
+    ToolSource source,
+  ) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => TerminalDialog(
+        title: 'Installing ${tool.name} (${source.label})',
+        action: (onLog) async {
+          onLog(
+            'Source: ${source.label} | Channel: ${source.channel} | v${source.version}',
+          );
+          onLog('Preparing environment for ${tool.name}...');
+          await Future.delayed(const Duration(milliseconds: 500));
+          final provider = context.read<ToolProvider>();
+          onLog('Executing installation from ${source.url}...');
+          final success = await provider.installTool(tool.name, source: source);
           onLog(
             success
                 ? 'Package successfully installed!'
@@ -371,6 +403,7 @@ class _ToolListPageState extends State<ToolListPage> {
                             tool: tool,
                             onInstall: _onInstallTool,
                             onUninstall: _onUninstallTool,
+                            onInstallWithSource: _onInstallToolWithSource,
                           );
                         },
                       ),
