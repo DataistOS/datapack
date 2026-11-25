@@ -48,7 +48,9 @@ class AboutPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24.0),
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withOpacity(0.15),
+                        color: theme.colorScheme.primary.withValues(
+                          alpha: 0.15,
+                        ),
                         blurRadius: 16,
                         offset: const Offset(0, 6),
                       ),
@@ -75,8 +77,9 @@ class AboutPage extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHighest
-                        .withOpacity(0.5),
+                    color: theme.colorScheme.surfaceContainerHighest.withValues(
+                      alpha: 0.5,
+                    ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -143,10 +146,12 @@ class AboutPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.15),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.15,
+        ),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.2),
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.2),
         ),
       ),
       child: Row(
@@ -154,7 +159,7 @@ class AboutPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.1),
+              color: theme.colorScheme.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: theme.colorScheme.primary, size: 22),

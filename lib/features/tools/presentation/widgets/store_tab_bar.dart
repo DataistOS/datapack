@@ -106,12 +106,14 @@ class StoreTabBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? theme.colorScheme.primaryContainer
-              : theme.colorScheme.surfaceContainerHighest.withOpacity(0.2),
+              : theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.2,
+                ),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: isSelected
-                ? theme.colorScheme.primary.withOpacity(0.4)
-                : theme.colorScheme.outlineVariant.withOpacity(0.2),
+                ? theme.colorScheme.primary.withValues(alpha: 0.4)
+                : theme.colorScheme.outlineVariant.withValues(alpha: 0.2),
           ),
         ),
         child: Row(
@@ -142,8 +144,10 @@ class StoreTabBar extends StatelessWidget {
                   color:
                       badgeColor ??
                       (isSelected
-                          ? theme.colorScheme.primary.withOpacity(0.25)
-                          : theme.colorScheme.onSurface.withOpacity(0.08)),
+                          ? theme.colorScheme.primary.withValues(alpha: 0.25)
+                          : theme.colorScheme.onSurface.withValues(
+                              alpha: 0.08,
+                            )),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(

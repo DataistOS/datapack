@@ -65,10 +65,12 @@ class _SystemStorageCardState extends State<SystemStorageCard> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.2),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.2,
+            ),
             borderRadius: BorderRadius.circular(14.0),
             border: Border.all(
-              color: theme.colorScheme.outlineVariant.withOpacity(0.3),
+              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
             ),
           ),
           child: Column(

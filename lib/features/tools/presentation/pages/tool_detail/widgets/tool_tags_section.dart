@@ -24,12 +24,14 @@ class ToolTagsSection extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest.withOpacity(
-                  0.4,
+                color: theme.colorScheme.surfaceContainerHighest.withValues(
+                  alpha: 0.4,
                 ),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: theme.colorScheme.outlineVariant.withOpacity(0.2),
+                  color: theme.colorScheme.outlineVariant.withValues(
+                    alpha: 0.2,
+                  ),
                 ),
               ),
               child: Text(

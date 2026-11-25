@@ -25,6 +25,7 @@ class _WorkspacesPageState extends State<WorkspacesPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<WorkspaceProvider>().fetchWorkspaces();
       _loadRegions();
     });
@@ -32,6 +33,7 @@ class _WorkspacesPageState extends State<WorkspacesPage> {
 
   Future<void> _loadRegions() async {
     final regions = await _regionService.fetchRegions();
+    if (!mounted) return;
     setState(() {
       _regions = regions;
       _isLoadingRegions = false;
@@ -82,8 +84,8 @@ class _WorkspacesPageState extends State<WorkspacesPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    color: theme.colorScheme.secondaryContainer.withOpacity(
-                      0.3,
+                    color: theme.colorScheme.secondaryContainer.withValues(
+                      alpha: 0.3,
                     ),
                     child: ExpansionTile(
                       title: Text(
@@ -231,8 +233,8 @@ class _WorkspacesPageState extends State<WorkspacesPage> {
       ),
     );
 
-    if (context.mounted) {
-      toolProvider.fetchTools();
+    if (mounted) {
+      await toolProvider.fetchTools();
     }
   }
 
@@ -333,8 +335,8 @@ class _WorkspacesPageState extends State<WorkspacesPage> {
       ),
     );
 
-    if (context.mounted) {
-      toolProvider.fetchTools();
+    if (mounted) {
+      await toolProvider.fetchTools();
     }
   }
 }

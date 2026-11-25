@@ -42,13 +42,13 @@ class ToolCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
           color: tool.isFavorite
-              ? Colors.amber.withOpacity(0.6)
-              : theme.colorScheme.outlineVariant.withOpacity(0.25),
+              ? Colors.amber.withValues(alpha: 0.6)
+              : theme.colorScheme.outlineVariant.withValues(alpha: 0.25),
           width: tool.isFavorite ? 1.5 : 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -82,7 +82,7 @@ class ToolCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 6,
                         offset: const Offset(0, 3),
                       ),
@@ -125,7 +125,7 @@ class ToolCard extends StatelessWidget {
                             width: 56,
                             height: 56,
                             color: theme.colorScheme.primaryContainer
-                                .withOpacity(0.8),
+                                .withValues(alpha: 0.8),
                             child: Icon(
                               Icons.terminal_rounded,
                               color: theme.colorScheme.primary,
@@ -160,7 +160,7 @@ class ToolCard extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: theme.colorScheme.secondaryContainer
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -199,7 +199,7 @@ class ToolCard extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: theme.colorScheme.surfaceContainerHighest
-                                    .withOpacity(0.35),
+                                    .withValues(alpha: 0.35),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -225,7 +225,7 @@ class ToolCard extends StatelessWidget {
                         : Icons.star_border_rounded,
                     color: tool.isFavorite
                         ? Colors.amber
-                        : theme.colorScheme.outline.withOpacity(0.7),
+                        : theme.colorScheme.outline.withValues(alpha: 0.7),
                   ),
                   onPressed: () {
                     context.read<ToolProvider>().toggleFavorite(
@@ -246,7 +246,9 @@ class ToolCard extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             foregroundColor: theme.colorScheme.error,
                             side: BorderSide(
-                              color: theme.colorScheme.error.withOpacity(0.5),
+                              color: theme.colorScheme.error.withValues(
+                                alpha: 0.5,
+                              ),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),

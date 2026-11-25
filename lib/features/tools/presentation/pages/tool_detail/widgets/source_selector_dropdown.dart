@@ -67,10 +67,12 @@ class SourceSelectorDropdown extends StatelessWidget {
         height: 40,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.45),
+          color: theme.colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.45,
+          ),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: theme.colorScheme.outlineVariant.withOpacity(0.5),
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
           ),
         ),
         child: Row(

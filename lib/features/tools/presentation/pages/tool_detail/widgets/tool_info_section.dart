@@ -92,11 +92,11 @@ class _ToolInfoSectionState extends State<ToolInfoSection> {
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [
-                                      theme.colorScheme.surface.withOpacity(
-                                        0.0,
+                                      theme.colorScheme.surface.withValues(
+                                        alpha: 0.0,
                                       ),
                                       theme.colorScheme.surfaceContainerHighest
-                                          .withOpacity(0.9),
+                                          .withValues(alpha: 0.9),
                                     ],
                                   ),
                                 ),
@@ -214,11 +214,11 @@ class _ToolInfoSectionState extends State<ToolInfoSection> {
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [
-                                      theme.colorScheme.surface.withOpacity(
-                                        0.0,
+                                      theme.colorScheme.surface.withValues(
+                                        alpha: 0.0,
                                       ),
                                       theme.colorScheme.surfaceContainerHighest
-                                          .withOpacity(0.9),
+                                          .withValues(alpha: 0.9),
                                     ],
                                   ),
                                 ),
@@ -311,10 +311,12 @@ class _ToolInfoSectionState extends State<ToolInfoSection> {
       width: double.infinity,
       padding: const EdgeInsets.all(18.0),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.15),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.15,
+        ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.25),
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.25),
         ),
       ),
       child: child,

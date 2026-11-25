@@ -26,7 +26,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryContainer.withOpacity(0.5),
+                color: theme.colorScheme.primaryContainer.withValues(
+                  alpha: 0.5,
+                ),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
@@ -176,7 +178,7 @@ void showUpdateDialog(BuildContext context) async {
                 padding: const EdgeInsets.all(8),
                 constraints: const BoxConstraints(maxHeight: 150),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: SingleChildScrollView(

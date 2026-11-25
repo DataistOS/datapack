@@ -8,7 +8,12 @@ class TrayService with TrayListener {
   factory TrayService() => _instance;
   TrayService._internal();
 
+  bool _isInitialized = false;
+
   Future<void> initTray() async {
+    if (_isInitialized) return;
+    _isInitialized = true;
+
     try {
       trayManager.addListener(this);
 
@@ -16,17 +21,32 @@ class TrayService with TrayListener {
           ? 'assets/images/logo.ico'
           : 'assets/images/logo.png';
 
-      await trayManager.setIcon(iconPath);
-      await trayManager.setToolTip('Datapack Package Manager');
+      try {
+        await trayManager.setIcon(iconPath);
+      } catch (e) {
+        debugPrint('Tray setIcon warning: $e');
+      }
 
-      Menu menu = Menu(
-        items: [
-          MenuItem(key: 'show_window', label: 'Open Datapack'),
-          MenuItem.separator(),
-          MenuItem(key: 'exit_app', label: 'Quit'),
-        ],
-      );
-      await trayManager.setContextMenu(menu);
+      if (!Platform.isLinux) {
+        try {
+          await trayManager.setToolTip('Datapack Package Manager');
+        } catch (e) {
+          debugPrint('Tray setToolTip warning: $e');
+        }
+      }
+
+      try {
+        final Menu menu = Menu(
+          items: [
+            MenuItem(key: 'show_window', label: 'Open Datapack'),
+            MenuItem.separator(),
+            MenuItem(key: 'exit_app', label: 'Quit'),
+          ],
+        );
+        await trayManager.setContextMenu(menu);
+      } catch (e) {
+        debugPrint('Tray setContextMenu warning: $e');
+      }
     } catch (e) {
       debugPrint('Failed to initialize tray: $e');
     }

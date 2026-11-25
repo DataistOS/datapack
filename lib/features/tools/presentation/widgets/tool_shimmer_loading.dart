@@ -18,10 +18,12 @@ class ToolShimmerLoading extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
           padding: const EdgeInsets.all(14.0),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.15),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.15,
+            ),
             borderRadius: BorderRadius.circular(12.0),
             border: Border.all(
-              color: theme.colorScheme.outlineVariant.withOpacity(0.1),
+              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.1),
             ),
           ),
           child: Row(

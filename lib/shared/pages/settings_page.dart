@@ -81,8 +81,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   secondary: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer.withOpacity(
-                        0.5,
+                      color: theme.colorScheme.primaryContainer.withValues(
+                        alpha: 0.5,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -119,8 +119,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   secondary: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer.withOpacity(
-                        0.5,
+                      color: theme.colorScheme.primaryContainer.withValues(
+                        alpha: 0.5,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -174,8 +174,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   leading: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.secondaryContainer.withOpacity(
-                        0.5,
+                      color: theme.colorScheme.secondaryContainer.withValues(
+                        alpha: 0.5,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -220,10 +220,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildSettingsCard(ThemeData theme, {required Widget child}) {
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.25),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.25,
+        ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.3),
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
         ),
       ),
       child: ClipRRect(borderRadius: BorderRadius.circular(16), child: child),

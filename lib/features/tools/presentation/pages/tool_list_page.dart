@@ -40,6 +40,7 @@ class _ToolListPageState extends State<ToolListPage> {
     _initTray();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<ToolProvider>().fetchTools();
     });
   }
@@ -53,6 +54,7 @@ class _ToolListPageState extends State<ToolListPage> {
   void _onSearchChanged() {
     if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      if (!mounted) return;
       setState(() {
         _searchQuery = _searchController.text.trim().toLowerCase();
       });
@@ -71,15 +73,15 @@ class _ToolListPageState extends State<ToolListPage> {
   }
 
   Future<void> _onInstallTool(BuildContext context, tool) async {
+    final provider = context.read<ToolProvider>();
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => TerminalDialog(
+      builder: (dialogContext) => TerminalDialog(
         title: 'Installing ${tool.name}',
         action: (onLog) async {
           onLog('Preparing environment for ${tool.name}...');
           await Future.delayed(const Duration(milliseconds: 500));
-          final provider = context.read<ToolProvider>();
           onLog('Executing system installation command...');
           final success = await provider.installTool(tool.name);
           onLog(
@@ -91,7 +93,9 @@ class _ToolListPageState extends State<ToolListPage> {
         },
       ),
     );
-    if (context.mounted) context.read<ToolProvider>().fetchTools();
+    if (mounted) {
+      await provider.fetchTools();
+    }
   }
 
   Future<void> _onInstallToolWithSource(
@@ -99,10 +103,11 @@ class _ToolListPageState extends State<ToolListPage> {
     tool,
     ToolSource source,
   ) async {
+    final provider = context.read<ToolProvider>();
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => TerminalDialog(
+      builder: (dialogContext) => TerminalDialog(
         title: 'Installing ${tool.name} (${source.label})',
         action: (onLog) async {
           onLog(
@@ -110,7 +115,6 @@ class _ToolListPageState extends State<ToolListPage> {
           );
           onLog('Preparing environment for ${tool.name}...');
           await Future.delayed(const Duration(milliseconds: 500));
-          final provider = context.read<ToolProvider>();
           onLog('Executing installation from ${source.url}...');
           final success = await provider.installTool(tool.name, source: source);
           onLog(
@@ -122,19 +126,21 @@ class _ToolListPageState extends State<ToolListPage> {
         },
       ),
     );
-    if (context.mounted) context.read<ToolProvider>().fetchTools();
+    if (mounted) {
+      await provider.fetchTools();
+    }
   }
 
   Future<void> _onUninstallTool(BuildContext context, tool) async {
+    final provider = context.read<ToolProvider>();
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => TerminalDialog(
+      builder: (dialogContext) => TerminalDialog(
         title: 'Uninstalling ${tool.name}',
         action: (onLog) async {
           onLog('Preparing to remove ${tool.name}...');
           await Future.delayed(const Duration(milliseconds: 500));
-          final provider = context.read<ToolProvider>();
           onLog('Executing system removal command...');
           final success = await provider.uninstallTool(tool.name);
           onLog(
@@ -146,7 +152,9 @@ class _ToolListPageState extends State<ToolListPage> {
         },
       ),
     );
-    if (context.mounted) context.read<ToolProvider>().fetchTools();
+    if (mounted) {
+      await provider.fetchTools();
+    }
   }
 
   @override
@@ -182,7 +190,9 @@ class _ToolListPageState extends State<ToolListPage> {
                   color: theme.colorScheme.surface,
                   border: Border(
                     bottom: BorderSide(
-                      color: theme.colorScheme.outlineVariant.withOpacity(0.2),
+                      color: theme.colorScheme.outlineVariant.withValues(
+                        alpha: 0.2,
+                      ),
                       width: 1,
                     ),
                   ),
@@ -226,8 +236,8 @@ class _ToolListPageState extends State<ToolListPage> {
                         hintText: 'Search software, packages, and tools...',
                         hintStyle: TextStyle(
                           fontSize: 13,
-                          color: theme.colorScheme.onSurfaceVariant.withOpacity(
-                            0.6,
+                          color: theme.colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.6,
                           ),
                         ),
                         prefixIcon: Icon(
@@ -246,7 +256,7 @@ class _ToolListPageState extends State<ToolListPage> {
                             : null,
                         filled: true,
                         fillColor: theme.colorScheme.surfaceContainerHighest
-                            .withOpacity(0.35),
+                            .withValues(alpha: 0.35),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 8,
                           horizontal: 14,
@@ -258,15 +268,17 @@ class _ToolListPageState extends State<ToolListPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: theme.colorScheme.outlineVariant.withOpacity(
-                              0.2,
+                            color: theme.colorScheme.outlineVariant.withValues(
+                              alpha: 0.2,
                             ),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
-                            color: theme.colorScheme.primary.withOpacity(0.6),
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.6,
+                            ),
                             width: 1.5,
                           ),
                         ),
@@ -368,7 +380,9 @@ class _ToolListPageState extends State<ToolListPage> {
                             Icon(
                               Icons.storefront_rounded,
                               size: 56,
-                              color: theme.colorScheme.outline.withOpacity(0.5),
+                              color: theme.colorScheme.outline.withValues(
+                                alpha: 0.5,
+                              ),
                             ),
                             const SizedBox(height: 12),
                             Text(

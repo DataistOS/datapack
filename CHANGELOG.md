@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.1] - 2026-11-25
+
+### Added
+- Refined UpUpa (Hodhod) source settings card and configuration handling in settings flow.
+
+### Fixed
+- Resolved all static analysis (`dart analyze`) warnings and deprecation notices across presentation widgets, pages, and services.
+- Addressed `BuildContext` usage across async boundaries to improve widget lifecycle safety.
+- Prevented `MissingPluginException` from `setToolTip` on Linux (`tray_manager` `0.5.3`) by guarding platform-unsupported calls and adding idempotent initialization in `TrayService`.
+
+### Changed
+- Migrated color opacity calls from `.withOpacity(...)` to `.withValues(alpha: ...)` for precision and Flutter SDK compatibility.
+- Updated project version metadata (`VERSION` and `pubspec.yaml`) to `0.6.1`.
+
 ## [0.6.0] - 2026-11-23
 
 ### Added

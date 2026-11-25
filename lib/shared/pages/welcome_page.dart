@@ -118,7 +118,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           height: 130,
                           decoration: BoxDecoration(
                             color: theme.colorScheme.primaryContainer
-                                .withOpacity(0.4),
+                                .withValues(alpha: 0.4),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(

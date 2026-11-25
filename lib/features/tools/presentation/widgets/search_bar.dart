@@ -58,7 +58,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+          fillColor: theme.colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.5,
+          ),
           contentPadding: const EdgeInsets.symmetric(
             vertical: 12,
             horizontal: 16,

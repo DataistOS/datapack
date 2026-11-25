@@ -34,10 +34,10 @@ class ToolHeaderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.2),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: theme.colorScheme.outlineVariant.withOpacity(0.3),
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -49,7 +49,7 @@ class ToolHeaderCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -88,8 +88,8 @@ class ToolHeaderCard extends StatelessWidget {
                     : Container(
                         width: 72,
                         height: 72,
-                        color: theme.colorScheme.primaryContainer.withOpacity(
-                          0.8,
+                        color: theme.colorScheme.primaryContainer.withValues(
+                          alpha: 0.8,
                         ),
                         child: Icon(
                           Icons.terminal_rounded,
@@ -122,8 +122,8 @@ class ToolHeaderCard extends StatelessWidget {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.secondaryContainer.withOpacity(
-                          0.5,
+                        color: theme.colorScheme.secondaryContainer.withValues(
+                          alpha: 0.5,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -142,8 +142,8 @@ class ToolHeaderCard extends StatelessWidget {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryContainer.withOpacity(
-                          0.45,
+                        color: theme.colorScheme.primaryContainer.withValues(
+                          alpha: 0.45,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -163,7 +163,7 @@ class ToolHeaderCard extends StatelessWidget {
                           vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.orange.withOpacity(0.2),
+                          color: Colors.orange.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
@@ -197,7 +197,7 @@ class ToolHeaderCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: theme.colorScheme.error,
                       side: BorderSide(
-                        color: theme.colorScheme.error.withOpacity(0.5),
+                        color: theme.colorScheme.error.withValues(alpha: 0.5),
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
